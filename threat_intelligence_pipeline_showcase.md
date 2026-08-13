@@ -4,7 +4,7 @@ An enterprise-grade, fully automated cybersecurity ETL (Extract, Transform, Load
 
 ---
 
-![System Architecture Overview](file:///C:/Users/heyit/.gemini/antigravity-ide/brain/0ee76c24-7771-4b0d-84d0-7ae8a161ce84/threat_intel_pipeline_architecture_1786584289296.png)
+![System Architecture Overview](docs/images/architecture.png)
 
 ---
 
@@ -66,9 +66,9 @@ flowchart TD
 The pipeline auto-configures index patterns and default settings in Kibana (`http://localhost:5601`). The dashboard provides real-time visibility into incoming threats:
 
 ````carousel
-![Kibana Dashboard - Source Metrics & Visualizations](file:///C:/Users/heyit/.gemini/antigravity-ide/brain/0ee76c24-7771-4b0d-84d0-7ae8a161ce84/dashboard_top_charts_refreshed_1786584106729.png)
+![Kibana Dashboard - Source Metrics & Visualizations](docs/images/kibana_dashboard_top.png)
 <!-- slide -->
-![Kibana Dashboard - Data Telemetry & Field Explorer](file:///C:/Users/heyit/.gemini/antigravity-ide/brain/0ee76c24-7771-4b0d-84d0-7ae8a161ce84/dashboard_lower_1786584081487.png)
+![Kibana Dashboard - Data Telemetry & Field Explorer](docs/images/kibana_dashboard_lower.png)
 ````
 
 > [!TIP]
@@ -80,7 +80,7 @@ The pipeline auto-configures index patterns and default settings in Kibana (`htt
 
 Every pipeline execution automatically generates a self-contained executive HTML report saved under `reports/output/`. 
 
-![HTML Security Report Preview](file:///C:/Users/heyit/.gemini/antigravity-ide/brain/0ee76c24-7771-4b0d-84d0-7ae8a161ce84/threat_intel_html_report_preview_1786584318050.png)
+![HTML Security Report Preview](docs/images/html_report_preview.png)
 
 > [!NOTE]
 > **Report Contents**:

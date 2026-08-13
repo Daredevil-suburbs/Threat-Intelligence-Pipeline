@@ -4,7 +4,9 @@ A fully automated cybersecurity project that collects IOCs (Indicators of Compro
 
 ---
 
-## 📐 Architecture
+![Architecture Overview](docs/images/architecture.png)
+
+> 📖 **Recruiter / Showcase Guide**: For full visual walkthrough, Kibana dashboard screenshots, CLI logs, and schema specifications, see [threat_intelligence_pipeline_showcase.md](threat_intelligence_pipeline_showcase.md).
 
 ```
 ┌─────────────────────────────────────────────────────────┐
