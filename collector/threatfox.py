@@ -32,7 +32,8 @@ def fetch() -> list[dict]:
     try:
         logger.info("Fetching ThreatFox IOCs...")
         payload = {"query": "get_iocs", "days": 3}
-        resp = requests.post(API_URL, json=payload, timeout=30)
+        headers = {"User-Agent": "ThreatIntelPipeline/1.0"}
+        resp = requests.post(API_URL, json=payload, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
 

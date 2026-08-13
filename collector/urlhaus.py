@@ -24,7 +24,8 @@ def fetch() -> list[dict]:
 
     try:
         logger.info("Fetching URLhaus feed...")
-        resp = requests.post(url, timeout=30)
+        headers = {"User-Agent": "ThreatIntelPipeline/1.0"}
+        resp = requests.post(url, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
 
