@@ -182,6 +182,7 @@ Stage 5: Generating HTML report...
 ## 🚀 Technical Skills Demonstrated
 
 - **Languages & Frameworks**: Python 3.12, SQL, HTML5/CSS3, Shell/PowerShell
+- **AI & Agentic Systems**: Model Context Protocol (MCP), FastMCP (`mcp[cli]`), Input Guardrails & Pydantic Validation
 - **Data Engineering & Databases**: SQLite3, Elasticsearch 8.x, Bulk Indexing API, Data Deduplication
-- **Cybersecurity & Threat Intelligence**: IOC Tracking (IPs, Hashes, Domains, URLs), OSINT Integrations (VirusTotal, AbuseIPDB, abuse.ch)
+- **Cybersecurity & Threat Intelligence**: IOC Tracking (IPs, Hashes, Domains, URLs), OSINT Integrations (VirusTotal, AbuseIPDB, abuse.ch), Incident Severity Analysis
 - **Containerization & Visualization**: Docker, Docker Compose, Kibana Dashboards, Saved Objects API

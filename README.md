@@ -73,6 +73,8 @@ threat-intel-pipeline/
 │   ├── setup_kibana.py      ← Auto-create index pattern in Kibana
 │   └── kibana_objects.json  ← Saved objects for import
 │
+├── mcp_server.py            ← FastMCP AI Server for LLM agent integration
+│
 ├── pipeline/
 │   └── runner.py            ← Orchestrates all 5 stages
 │
@@ -188,6 +190,79 @@ python main.py --stats
    - **Metric**: total count
    - **Data table**: `ioc_value`, `threat_type`, `confidence`
    - **Map**: aggregate by `country.keyword`
+
+---
+
+## 🤖 AI & Model Context Protocol (MCP) Integration
+
+This repository includes a standalone AI integration layer powered by the **Model Context Protocol (MCP)** using `mcp[cli]` / **FastMCP**. It allows AI assistants (such as Claude Desktop, Cursor, or custom LangChain / CrewAI agents) to securely interact with live threat telemetry, query Elasticsearch logs, check Docker container health, and calculate threat severity classifications.
+
+### 🛠️ Exposed MCP Tools
+
+1. `search_logs(query: str, index_pattern: str = "threat-intel-iocs", timeframe_minutes: int = 60)`
+   - Connects to local Elasticsearch (`http://localhost:9200`).
+   - Queries matching threat hits/log entries within the lookback duration.
+   - Built-in input sanitization guardrails preventing Lucene script injection and wildcard payload abuse.
+
+2. `get_container_status()`
+   - Executes real-time health checks on `threat-intel-es`, `threat-intel-kibana`, and local Docker containers.
+   - Verifies REST API health endpoints for Elasticsearch and Kibana.
+
+3. `analyze_threat_level(failed_logins: int, unauthorized_attempts: int)`
+   - Computes weighted threat severity (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`).
+   - Outputs actionable SOC remediation steps (e.g. firewall IP blocking, session revocation, MFA enforcement).
+
+---
+
+### 🚀 Running the MCP Server
+
+```bash
+# Run the MCP server standalone
+python mcp_server.py
+```
+
+### 🔌 Connecting to LLM Clients
+
+#### 1. Claude Desktop Configuration
+Add the following snippet to your Claude Desktop configuration file (`%APPDATA%\Claude\claude_desktop_config.json` on Windows or `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
+
+```json
+{
+  "mcpServers": {
+    "Threat-Intel-MCP": {
+      "command": "python",
+      "args": [
+        "C:/Users/heyit/Desktop/threat-intel-pipeline/mcp_server.py"
+      ],
+      "cwd": "C:/Users/heyit/Desktop/threat-intel-pipeline"
+    }
+  }
+}
+```
+
+#### 2. Custom Python Agent (LangChain / CrewAI / MCP Client)
+```python
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+server_params = StdioServerParameters(
+    command="python",
+    args=["mcp_server.py"]
+)
+
+async def run():
+    async with stdio_client(server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            
+            # List available tools
+            tools = await session.list_tools()
+            print("Available MCP Tools:", [t.name for t in tools.tools])
+            
+            # Execute log search tool
+            result = await session.call_tool("search_logs", arguments={"query": "botnet_c2"})
+            print(result.content[0].text)
+```
 
 ---
 
